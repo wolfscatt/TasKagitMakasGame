@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".MainActivity">
+
+        <Button
+            android:id="@+id/blueButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:background="@color/blue"
+            android:onClick="blueClick"
+            android:rotation="180"
+            android:text="MAVİ OYUNCU"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00FF37"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/blueScoreText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:rotation="180"
+                android:text="Mavi Oyuncu: "
+                android:textColor="@color/blue"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/redScoreText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=" Kırmızı Oyuncu: "
+                android:textColor="@color/red"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/redButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="5"
+            android:background="@color/red"
+            android:onClick="redClick"
+            android:text="KIRMIZI OYUNCU"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp" />
+        <Button
+            android:id="@+id/temizleButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/teal_200"
+            android:onClick="temizle"
+            android:text="SKORLARI TEMİZLE"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            >
+        </Button>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            app:adSize="SMART_BANNER"
+            app:adUnitId="ca-app-pub-5495185379101554/4332220034">
+
+        </com.google.android.gms.ads.AdView>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
