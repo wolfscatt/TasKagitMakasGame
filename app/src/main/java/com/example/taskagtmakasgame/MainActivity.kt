@@ -5,16 +5,19 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity()
 {
+
+    private var mInterstitialAd: InterstitialAd? = null
+    private final var TAG = "MainActivity"
 
     lateinit var mAdView : AdView
 
@@ -43,6 +46,45 @@ class MainActivity : AppCompatActivity()
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
+        InterstitialAd.load(this,"ca-app-pub-5495185379101554/9363404066", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d(TAG, adError.toString())
+                mInterstitialAd = null
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                Log.d(TAG, "Ad was loaded.")
+                mInterstitialAd = interstitialAd
+            }
+        })
+        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+            override fun onAdClicked() {
+                // Called when a click is recorded for an ad.
+                Log.d(TAG, "Ad was clicked.")
+            }
+
+            override fun onAdDismissedFullScreenContent() {
+                // Called when ad is dismissed.
+                Log.d(TAG, "Ad dismissed fullscreen content.")
+                mInterstitialAd = null
+            }
+
+            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                // Called when ad fails to show.
+                Log.e(TAG, "Ad failed to show fullscreen content.")
+                mInterstitialAd = null
+            }
+
+            override fun onAdImpression() {
+                // Called when an impression is recorded for an ad.
+                Log.d(TAG, "Ad recorded an impression.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                // Called when ad is shown.
+                Log.d(TAG, "Ad showed fullscreen content.")
+            }
+        }
     }
 
     fun temizle(view: View){
@@ -55,6 +97,8 @@ class MainActivity : AppCompatActivity()
         isRedButtonClicked = false
         redButton.text = "KIRMIZI OYUNCU"
         blueButton.text = "MAVİ OYUNCU"
+
+        mInterstitialAd?.show(this)
     }
 
     fun scoreCalc(){
@@ -79,7 +123,11 @@ class MainActivity : AppCompatActivity()
         }else if(blueButton.text == "MAKAS" && redButton.text == "KAĞIT"){
             blueScore+=1
             blueScoreText.text = "Mavi Oyuncu: ${blueScore} "
-
+        }
+        if (blueScore == 3 || redScore == 3) {
+            mInterstitialAd?.show(this)
+        } else {
+            Log.d("TAG", "The interstitial ad wasn't ready yet.")
         }
     }
 
